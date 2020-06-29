@@ -4,7 +4,7 @@ CS 570 Summer 2020
 Assignment #3
 Filename: README
 
-FILE MANIFEST: Makefile, README, header.h, main.c,
+FILE MANIFEST: Makefile, README, header.h, input.c, main.c, threads.c
 
 COMPILE INSTRUCTIONS:
 "make" to compile.
