@@ -4,7 +4,11 @@
  * CS570 Summer 2020
  * Project:    Assignment #3, Management of Threads
  * Filename:   threads.c
- * Notes:      
+ * Notes:
  ******************************************************************************/
 
 #include "header.h"
+
+void start_threads(int timeToRun, int printEvery, int totalTime) {
+    printf("Reached start threads\n");
+}

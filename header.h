@@ -20,4 +20,6 @@
 /* Function Prototype Declarations */
 void parse_input(int argc, char **argv);
 
+void start_threads(int, int, int);
+
 #endif
