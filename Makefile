@@ -8,7 +8,7 @@
 ################################################################################
 
 EXEC = mot
-FILES = main.c input.c threads.c
+FILES = main.c debug.c input.c threads.c
 CC = gcc
 LFLAGS = -o
 CFLAGS = -c

@@ -14,13 +14,13 @@ void validate_args(int argc){
     /* Handle incorrect arguments entered (not 1 nor 4) */
     if(argc != 1 && argc != 4){
         switch(argc){
-            case 2:
+            case 2:     /* Only 1 arg entered                                 */
                 printf("***Error. Only one argument entered out of 3\n");
                 break;
-            case 3:
+            case 3:     /* Only 2 arg entered                                 */
                 printf("***Error. Only two arguments entered out of 3\n");
                 break;
-            default:
+            default:    /* More than 3 arguments entered                      */
                 printf("***Error. More than three arguments entered.\n");
         }
         printf("Please restart application and only enter zero or three arguments.\n");

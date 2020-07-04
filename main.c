@@ -10,9 +10,13 @@
 #include "header.h"
 
 int main(int argc, char **argv) {
-    /* Call functions to parse the input */
+    /* Call functions to parse the input    */
     validate_args(argc);
     set_timers(argc,argv);
+    /*************** DEBUG ONLY**************/
+    print_timers();
+    print_args(argc,argv);
+    /****************************************/
     start_threads();
 
     //parse_input(argc, argv);

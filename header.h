@@ -38,7 +38,6 @@ void set_timers(int, char **);
 void validate_input();
 void print_timers();
 void print_args(int,char**);
-
 void start_threads();
 
 #endif
