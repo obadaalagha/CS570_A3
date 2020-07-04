@@ -10,8 +10,12 @@
 #include "header.h"
 
 int main(int argc, char **argv) {
-    /* Call function to parse the input */
-    parse_input(argc, argv);
+    /* Call functions to parse the input */
+    validate_args(argc);
+    set_timers(argc,argv);
+    start_threads();
+
+    //parse_input(argc, argv);
 
     return 0;
 }
