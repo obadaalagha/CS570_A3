@@ -9,6 +9,33 @@
 
 #include "header.h"
 
+
 void start_threads(struct timers input_t) {
     printf("Reached start threads\n");
+
 }
+
+void *main_thread(void *thread_arg){
+
+}
+
+void *sig_handler_thread(void *thread_arg){
+
+}
+
+void *manage_counter_thread(void *thread_arg){
+
+}
+
+void *counter_thread(void *thread_arg){
+
+}
+
+void *clock_thread(void *thread_arg){
+
+}
+
+void *alarm_thread(void *thread_arg){
+
+}
+
