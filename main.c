@@ -11,13 +11,14 @@
 
 int main(int argc, char **argv) {
     /* Call functions to parse the input    */
+    struct timers input_t;
     validate_args(argc);
-    set_timers(argc,argv);
+    set_timers(argc,argv,&input_t);
     /*************** DEBUG ONLY**************/
-    print_timers();
+    print_timers(input_t);
     print_args(argc,argv);
     /****************************************/
-    start_threads();
+    start_threads(input_t);
 
     //parse_input(argc, argv);
 

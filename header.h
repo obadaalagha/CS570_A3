@@ -28,16 +28,15 @@ struct timers{
     int alarm_time;         /* Alarm time to print notification on terminal    */
 };
 
-struct timers input_t;      /* Use to access our timer values                  */
 
 /* Function Prototype Declarations */
 void parse_input(int argc, char **argv);
 
 void validate_args(int);
-void set_timers(int, char **);
-void validate_input();
-void print_timers();
+void set_timers(int, char **,struct timers*);
+void validate_input(struct timers*);
+void print_timers(struct timers);
 void print_args(int,char**);
-void start_threads();
+void start_threads(struct timers);
 
 #endif

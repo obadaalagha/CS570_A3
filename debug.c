@@ -9,7 +9,7 @@
 
 #include "header.h"
 /* Print what we have in the timers structure                                 */
-void print_timers(){
+void print_timers(struct timers input_t){
     printf("Run time:   %d seconds\n",input_t.run_time);
     printf("Print time: %d seconds\n",input_t.print_time);
     printf("Alarm time: %d seconds\n",input_t.alarm_time);
