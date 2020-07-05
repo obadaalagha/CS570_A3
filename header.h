@@ -16,10 +16,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/* Default time values if user does not enter any arguments                    */
+#define DFL_RUN_TIME 25     /* Default running time value                      */
+#define DFL_PRINT_TIME 1    /* Default print frequency time                    */
+#define DFL_ALARM_TIME 17   /* Default alarm time                              */
+
+/* Declare structure to define the timers                                      */
+struct timers{
+    int run_time;           /* Running time of prog. before it exits           */
+    int print_time;         /* Frequency time to print the time                */
+    int alarm_time;         /* Alarm time to print notification on terminal    */
+};
+
 
 /* Function Prototype Declarations */
 void parse_input(int argc, char **argv);
 
-void start_threads(int, int, int);
+void validate_args(int);
+void set_timers(int, char **,struct timers*);
+void validate_input(struct timers*);
+void print_timers(struct timers);
+void print_args(int,char**);
+void start_threads(struct timers);
 
 #endif

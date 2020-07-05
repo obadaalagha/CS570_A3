@@ -9,6 +9,6 @@
 
 #include "header.h"
 
-void start_threads(int timeToRun, int printEvery, int totalTime) {
+void start_threads(struct timers input_t) {
     printf("Reached start threads\n");
 }
