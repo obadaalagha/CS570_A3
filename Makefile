@@ -10,7 +10,7 @@
 EXEC = mot
 FILES = main.c debug.c input.c threads.c
 CC = gcc
-LFLAGS = -o
+LFLAGS = -pthread -o
 CFLAGS = -c
 
 OBJECTS = $(FILES:.c=.o)

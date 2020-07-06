@@ -47,8 +47,8 @@ void set_timers(int argc, char **argv, struct timers *input_t){
 /* Will handle any incorrect inputs from user and display a message           */
 void validate_input(struct timers *input_t){
     /* Check if user entered negative values for arguments                    */
-    if(input_t->run_time < 0 || input_t->print_time < 0 || input_t->alarm_time < 0){
-        printf("***Error. Negative input entered for arguments.\n");
+    if(input_t->run_time < 1 || input_t->print_time < 1 || input_t->alarm_time < 1){
+        printf("***Error. Non-positive input entered for arguments.\n");
         printf("Now exiting...\n");
         exit(EXIT_FAILURE);
     }
