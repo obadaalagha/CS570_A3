@@ -41,7 +41,6 @@ void start_threads(struct timers);
 /* Worker threads															  */
 void *main_thread(void *);
 void *sig_handler_thread(void *);
-void *manage_counter_thread(void *);
 void *counter_thread(void *);
 void *clock_thread(void *);
 void *alarm_thread(void *);

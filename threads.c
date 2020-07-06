@@ -23,10 +23,6 @@ void *sig_handler_thread(void *thread_arg){
 
 }
 
-void *manage_counter_thread(void *thread_arg){
-
-}
-
 void *counter_thread(void *thread_arg){
 
 }
