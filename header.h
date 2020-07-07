@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 /* Default time values if user does not enter any arguments                   */
 #define DFL_RUN_TIME 25     /* Default running time value                     */
 #define DFL_PRINT_TIME 1    /* Default print frequency time                   */
