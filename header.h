@@ -41,7 +41,7 @@ void print_timers(struct timers);
 void print_args(int,char**);
 void start_threads(struct timers*);
 void check_t_err(int);
-/* Worker threads															  */
+/* Worker threads                                                              */
 void *main_thread(void *);
 void *sig_handler_thread(void *);
 void *counter_thread(void *);

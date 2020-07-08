@@ -57,7 +57,7 @@ void *main_thread(void *thread_arg){
 
     /* Join our threads and busy wait till all threads are done               */
     int t_id;                       /* thread index for our thread arr        */
-    pthread_attr_destroy(&attr);  /* Free attribute                           */
+    pthread_attr_destroy(&attr);    /* Free attribute                         */
     for(t_id=0;t_id<NUM_THREADS; t_id++){
         rc = pthread_join(threads[t_id],&status);
         /* If pthread_join was not successful it returns a positive number    */
