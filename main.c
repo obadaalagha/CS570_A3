@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
     set_timers(argc,argv,&input_t);
     /*************** DEBUG ONLY**************/
     print_timers(input_t);
-    print_args(argc,argv);
+    //print_args(argc,argv);
     /****************************************/
     start_threads(&input_t);
-
+    printf("Now exiting program...\n");
     //parse_input(argc, argv);
 
     return 0;

@@ -16,8 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
+#include <signal.h>         /* To use signals for our threads                 */
 #include <unistd.h>         /* To use alarm                                   */
+#include <pthread.h>        /* To use threads and its functions               */
+#include <time.h>           /* To print the time in our threads               */
 /* Default time values if user does not enter any arguments                   */
 #define DFL_RUN_TIME 25     /* Default running time value                     */
 #define DFL_PRINT_TIME 1    /* Default print frequency time                   */
