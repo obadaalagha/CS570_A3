@@ -13,9 +13,9 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>          /* To use standar input/output                    */
+#include <stdlib.h>         /* Use the standard library                       */ 
+#include <string.h>         /* To use string functions                        */
 #include <signal.h>         /* To use signals for our threads                 */
 #include <unistd.h>         /* To use alarm                                   */
 #include <pthread.h>        /* To use threads and its functions               */
@@ -25,6 +25,7 @@
 #define DFL_PRINT_TIME 1    /* Default print frequency time                   */
 #define DFL_ALARM_TIME 17   /* Default alarm time                             */
 #define NUM_THREADS 4       /* Number of threads needed                       */
+
 /* Declare structure to define the timers                                     */
 struct timers{
     int run_time;           /* Running time of prog. before it exits          */
@@ -32,10 +33,7 @@ struct timers{
     int alarm_time;         /* Alarm time to print notification on terminal   */
 };
 
-
 /* Function Prototype Declarations */
-void parse_input(int argc, char **argv);
-
 void validate_args(int);
 void set_timers(int, char **,struct timers*);
 void validate_input(struct timers*);

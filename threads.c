@@ -9,27 +9,25 @@
 #include <pthread.h>
 #include <time.h>
 #include "header.h"
+
 /* To hold data for our threads                                               */
-static sigset_t signal_mask;            /* Signals to block                   */
-pthread_t threads[NUM_THREADS];         /* Create our thread array            */
+static sigset_t signal_mask;        /* Signals to block                       */
+pthread_t threads[NUM_THREADS];     /* Create our thread array                */
 /* Volatile variable used so it is safe to use among threads and we tell      */
 /* the compiler to not optimize this variable giving it a value of 1 in loop  */
 volatile sig_atomic_t stop_timer;       
 
 void start_threads(struct timers *input_t) {
-    printf("Reached start threads\n");
-    pthread_t main_t;                   /* Our main thread                    */
-    int rc;                             /* error code from create thread      */
+    pthread_t main_t;               /* Our main thread                        */
+    int rc;                         /* error code from create thread          */
     /* Create the main thread                                                 */
     rc = pthread_create(&main_t,NULL,main_thread,input_t);
     check_t_err(rc);
-    pthread_exit(NULL);                 /* Exit main thread                   */
+    pthread_exit(NULL);             /* Exit main thread                       */
 
 }
 
 void *main_thread(void *thread_arg){
-    printf("Main thread\n");                                                ////
-
     int rc;                         /* Ret/Err code when creating thread      */
     pthread_attr_t attr;            /* Thread attribute to set our threads    */
     void *status;                   /* Status for joining our threads         */
@@ -57,19 +55,19 @@ void *main_thread(void *thread_arg){
     check_t_err(rc);
 
 
-    /* join our threads and busy wait till all threads are done             */
-    int t_id;                       /* thread index for our thread arr      */
-    pthread_attr_destroy(&attr);  /* Free attribute                         */
+    /* Join our threads and busy wait till all threads are done               */
+    int t_id;                       /* thread index for our thread arr        */
+    pthread_attr_destroy(&attr);  /* Free attribute                           */
     for(t_id=0;t_id<NUM_THREADS; t_id++){
         rc = pthread_join(threads[t_id],&status);
-        /* If pthread_join was not successful it returns a positive number  */
+        /* If pthread_join was not successful it returns a positive number    */
         if(rc){
             printf("ERROR; return code from pthread_join() is %d\n",rc);
             exit(EXIT_FAILURE);
         }
     }
-    printf("Timers are closed.\n");  /* Print friendly exit of timers          */    
-    printf("Now exiting....\n");    /* Print friendly exit                    */
+    printf("Timers are shutdown.\n"); /* Print friendly exit of timers        */    
+    printf("Now exiting program....\n");    /* Print friendly exit            */
     pthread_exit(NULL);             /* Exit main thread                       */
 }
 
@@ -81,9 +79,7 @@ void check_t_err(int rc){
 }
 
 void *sig_handler_thread(void *thread_arg){
-    printf("Signal handler\n");                                             ////
-
-    int sig_caught;         /* signal catcher for our threads                 */
+    int sig_caught;                 /* signal catcher for our threads         */
     while(!stop_timer){
         /* Wait until a a pending signal is generated                         */
         sigwait(&signal_mask,&sig_caught); 
@@ -94,7 +90,7 @@ void *sig_handler_thread(void *thread_arg){
                 stop_timer =1;      /* Signal all threads to stop             */
                 /* Print friendly message that timers are stopping            */
                 printf("Wow! Look at how the time has passed...\n"); 
-                printf("Closing timers....\n");
+                printf("Shutting down timers....\n");
                 /* Close of the alarm thread so it wont run anymore           */
                 pthread_cancel(threads[1]);
                 break;
@@ -115,7 +111,6 @@ void *sig_handler_thread(void *thread_arg){
 void *alarm_thread(void *thread_arg){
     struct timers *my_timers;
     my_timers = (struct timers *) thread_arg;
-    printf("Alarm thread\n");                                               ////
     sleep(my_timers->alarm_time);   /* Sleep for whatever argv[3] is          */
     /* Send signal handler when waken up from a good sleep                    */
     pthread_kill(threads[0],SIGUSR1);   
@@ -124,7 +119,6 @@ void *alarm_thread(void *thread_arg){
 void *counter_thread(void *thread_arg){
     struct timers *my_timers;
     my_timers = (struct timers *) thread_arg;
-    printf("Counter thread\n");                                             ////
     alarm(my_timers->run_time);     /* Set alarm to stop all timers           */
     pthread_exit(NULL);             /* Exit timer countdown thread            */
 }
@@ -132,7 +126,6 @@ void *counter_thread(void *thread_arg){
 void *clock_thread(void *thread_arg){
     struct timers *my_timers;
     my_timers = (struct timers *) thread_arg;
-    printf("Clock thread\n");                                               ////
     time_t t;                       /* To get our current time                */
     /* Will print time at a frequency the user enter in argv[2] (1sec/1min)   */
     /* Will print until the timer has expired                                 */
