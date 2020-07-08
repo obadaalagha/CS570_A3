@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     print_timers(input_t);
     print_args(argc,argv);
     /****************************************/
-    start_threads(input_t);
+    start_threads(&input_t);
 
     //parse_input(argc, argv);
 

@@ -8,28 +8,22 @@
  ******************************************************************************/
 #include <pthread.h>
 #include "header.h"
-#define NUM_THREADS 4
 /* To hold data for our threads                                             */
 static sigset_t signal_mask; /*signals to block                             */
 
-void start_threads(struct timers input_t) {
+void start_threads(struct timers *input_t) {
     printf("Reached start threads\n");
     pthread_t main_t;   /* Our main thread                                  */
     int rc;             /* error code                                       */
     long t_id;          /* thread id                                        */
     /* Create the main thread                                               */
-    rc = pthread_create(&main_t,NULL,main_thread,(void *)&input_t);
+    rc = pthread_create(&main_t,NULL,main_thread,input_t);
     check_t_err(rc);
     pthread_exit(NULL);
 }
 
 void *main_thread(void *thread_arg){
     printf("Main thread\n");
-    
-    struct timers *my_timers;
-    my_timers = (struct timers *) thread_arg;
-
-    int alarm_time = my_timers->alarm_time;
 
     pthread_t threads[NUM_THREADS]; /* Create our thread array              */
     int rc;                         /* Ret/Err code when creating thread    */
@@ -41,26 +35,27 @@ void *main_thread(void *thread_arg){
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     /* set signals                                                          */
-    sigemptyset(&signal_mask);
-    sigaddset(&signal_mask,SIGINT);
+    sigemptyset(&signal_mask);      /* Create empty set                     */
+    /* Add signals to be masked                                             */
+    sigaddset(&signal_mask,SIGINT); 
     sigaddset(&signal_mask,SIGALRM);
+    /* Add the signals that will be threads by the threads                  */
     pthread_sigmask(SIG_BLOCK,&signal_mask,NULL);
-
 
     /* Create threads with their own function threads                       */
     rc = pthread_create(&threads[0],&attr,sig_handler_thread, NULL);
     check_t_err(rc);
-    rc = pthread_create(&threads[1],&attr,counter_thread, NULL);
+    rc = pthread_create(&threads[1],&attr,counter_thread, thread_arg);
     check_t_err(rc);
-    rc = pthread_create(&threads[2],&attr,clock_thread, NULL);
+    rc = pthread_create(&threads[2],&attr,clock_thread, thread_arg);
     check_t_err(rc);
-    rc = pthread_create(&threads[3],&attr,alarm_thread, NULL);
+    rc = pthread_create(&threads[3],&attr,alarm_thread, thread_arg);
     check_t_err(rc);
 
 
-    /* join our threads to wait till all threads are done                   */
-    int t_id;
-    pthread_attr_destroy(&attr);
+    /* join our threads and busy wait till all threads are done             */
+    int t_id;                       /* thread index for our thread arr      */
+    pthread_attr_destroy(&attr);  /* Free attribute                         */
     for(t_id=0;t_id<NUM_THREADS; t_id++){
         rc = pthread_join(threads[t_id],&status);
         /* If pthread_join was not successful it returns a positive number  */
@@ -69,7 +64,6 @@ void *main_thread(void *thread_arg){
             exit(EXIT_FAILURE);
         }
     }
-    /* Free attribute */
     printf("Threads done.\n");
     pthread_exit(NULL);
 }
@@ -85,8 +79,9 @@ void *sig_handler_thread(void *thread_arg){
     printf("Signal handler\n");
 
     int sig_caught;         /* signal catcher for our threads               */
-    sigwait(&signal_mask,&sig_caught);
-    
+    /* Wait until a a pending signal is generated                           */
+    sigwait(&signal_mask,&sig_caught); 
+    /* Decide what appropriate action to do with the generated action       */
     switch (sig_caught){
         case SIGINT:
             printf("\nInterrupted\n"); 
@@ -103,17 +98,27 @@ void *sig_handler_thread(void *thread_arg){
 }
 
 void *counter_thread(void *thread_arg){
+    struct timers *my_timers;
+    my_timers = (struct timers *) thread_arg;
+    int run_time = my_timers->run_time;
     printf("Counter thread\n");
     pthread_exit(NULL);
 }
 
 void *clock_thread(void *thread_arg){
+    struct timers *my_timers;
+    my_timers = (struct timers *) thread_arg;
+    int print_time = my_timers->print_time;
     printf("Clock thread\n");
     pthread_exit(NULL);
 }
 
 void *alarm_thread(void *thread_arg){
+    struct timers *my_timers;
+    my_timers = (struct timers *) thread_arg;
+    int alarm_time = my_timers->alarm_time;
     printf("Alarm thread\n");
+    alarm(alarm_time);
     pthread_exit(NULL);
 }
 

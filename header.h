@@ -17,11 +17,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <unistd.h>         /* To use alarm                                   */
 /* Default time values if user does not enter any arguments                   */
 #define DFL_RUN_TIME 25     /* Default running time value                     */
 #define DFL_PRINT_TIME 1    /* Default print frequency time                   */
 #define DFL_ALARM_TIME 17   /* Default alarm time                             */
-
+#define NUM_THREADS 4       /* Number of threads needed                       */
 /* Declare structure to define the timers                                     */
 struct timers{
     int run_time;           /* Running time of prog. before it exits          */
@@ -38,7 +39,7 @@ void set_timers(int, char **,struct timers*);
 void validate_input(struct timers*);
 void print_timers(struct timers);
 void print_args(int,char**);
-void start_threads(struct timers);
+void start_threads(struct timers*);
 void check_t_err(int);
 /* Worker threads															  */
 void *main_thread(void *);
